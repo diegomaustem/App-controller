@@ -2,28 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        //
-    }
-
-    public function create()
-    {
-        //
+        $products = Product::all();
+        return $products;
     }
 
     public function store(Request $request)
     {
-        //
+        $product = Product::create($request->all());
+        return $product;
     }
 
-    public function show($id)
+    public function show(Product $product)
     {
-        //
+        return $product;
     }
 
     public function edit($id)
