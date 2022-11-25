@@ -19,23 +19,38 @@ class ProductController extends Controller
         return $product;
     }
 
-    public function show(Product $product)
+    public function show($id)
     {
-        return $product;
-    }
+        $product = Product::find($id);
 
-    public function edit($id)
-    {
-        //
+        if(empty($product)) {
+            return['msg'=> 'Produto não encontrado!'];
+        } else {
+            return $product;
+        }
     }
 
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+
+        if(empty($product)) {
+            return['msg'=> 'Atualização não pode ser feita!'];
+        } else {
+            $product->update($request->all());
+            return['msg'=> 'Produto alterado com sucesso!'];
+        }
     }
 
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+
+        if(empty($product)) {
+            return['msg'=> 'Produto não existe!'];
+        } else {
+            $product->delete();
+            return['msg'=> 'Produto excluido com sucesso!'];
+        }
     }
 }
