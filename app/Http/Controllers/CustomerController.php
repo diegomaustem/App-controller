@@ -7,21 +7,26 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
+    public function __construct(Customer $customer)
+    {
+        $this->customer = $customer;
+    }
+
     public function index()
     {
-        $customers = Customer::all();
-        return $customers;
+        $customers = $this->customer->all();
+        return response()->json($customers, 200);
     }
 
     public function store(Request $request)
     {
-        $customers = Customer::create($request->all());
+        $customers = $this->customer->create($request->all());
         return response()->json(['msg' => 'Cliente inserido com sucesso!'], 201);
     }
 
     public function show($id)
     {
-        $customer = Customer::find($id);
+        $customer = $this->customer->find($id);
 
         if(empty($customer)) {
             return response()->json(['msg'=> 'Cliente não encontrado!'], 404);
@@ -32,7 +37,7 @@ class CustomerController extends Controller
 
     public function update(Request $request, $id)
     {
-        $customer = Customer::find($id);
+        $customer = $this->customer->find($id);
 
         if(empty($customer)) {
             return response()->json(['msg'=> 'Atualização não pode ser feita!'], 404);
@@ -44,7 +49,7 @@ class CustomerController extends Controller
 
     public function destroy($id)
     {
-        $customer = Customer::find($id);
+        $customer = $this->customer->find($id);
 
         if(empty($customer)) {
             return response()->json(['msg'=> 'Cliente não existe!'], 404);

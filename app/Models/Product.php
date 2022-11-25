@@ -11,6 +11,19 @@ class Product extends Model
 
     protected $fillable = ['name', 'description', 'price'];
 
+    public function rules() {
+        return [
+            'name'  => 'required',
+            'price' => 'required'
+        ];
+    }
+
+    public function feedback() {
+        return [
+            'required' => 'O campo :attribute é obrigatório'
+        ];
+    }
+
     public function Custumer()
     {
         return $this->belongsTo(Customer::class);
