@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $product = Product::create($request->all());
-        return $product;
+        return response()->json(['msg' => 'Produto inserido com sucesso!'], 201);
     }
 
     public function show($id)
@@ -24,10 +24,10 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if(empty($product)) {
-            return['msg'=> 'Produto não encontrado!'];
-        } else {
-            return $product;
+            return response()->json(['msg'=> 'Produto não encontrado!'], 404);
         }
+
+        return response()->json($product, 200);
     }
 
     public function update(Request $request, $id)
@@ -35,10 +35,10 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if(empty($product)) {
-            return['msg'=> 'Atualização não pode ser feita!'];
+            return response()->json(['msg'=> 'Atualização não pode ser feita!'], 404);
         } else {
             $product->update($request->all());
-            return['msg'=> 'Produto alterado com sucesso!'];
+            return response()->json(['msg'=> 'Produto alterado com sucesso!'], 200);
         }
     }
 
@@ -47,10 +47,10 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if(empty($product)) {
-            return['msg'=> 'Produto não existe!'];
+            return response()->json(['msg'=> 'Não foi possivel excluir o produto!'], 404);
         } else {
             $product->delete();
-            return['msg'=> 'Produto excluido com sucesso!'];
+            return response()->json(['msg'=> 'Produto excluido com sucesso!'], 200);
         }
     }
 }

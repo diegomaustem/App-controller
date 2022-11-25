@@ -16,7 +16,7 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $customers = Customer::create($request->all());
-        return $customers;
+        return response()->json(['msg' => 'Cliente inserido com sucesso!'], 201);
     }
 
     public function show($id)
@@ -24,10 +24,10 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
 
         if(empty($customer)) {
-            return['msg'=> 'Cliente não encontrado!'];
-        } else {
-            return $customer;
+            return response()->json(['msg'=> 'Cliente não encontrado!'], 404);
         }
+
+        return response()->json($customer, 200);
     }
 
     public function update(Request $request, $id)
@@ -35,10 +35,10 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
 
         if(empty($customer)) {
-            return['msg'=> 'Atualização não pode ser feita!'];
+            return response()->json(['msg'=> 'Atualização não pode ser feita!'], 404);
         } else {
             $customer->update($request->all());
-            return['msg'=> 'Cliente alterado com sucesso!'];
+            return response()->json(['msg'=> 'Cliente alterado com sucesso!'], 200);
         }
     }
 
@@ -47,10 +47,10 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
 
         if(empty($customer)) {
-            return['msg'=> 'Cliente não existe!'];
+            return response()->json(['msg'=> 'Cliente não existe!'], 404);
         } else {
             $customer->delete();
-            return['msg'=> 'Cliente excluido com sucesso!'];
+            return response()->json(['msg'=> 'Cliente excluido com sucesso!'], 200);
         }
     }
 }
